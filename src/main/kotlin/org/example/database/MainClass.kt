@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
 import kotlinx.serialization.Serializable
+import org.example.database.databaseCreation.CreateDatabase
 
 class MainClass : Application() {
     override fun start(stage: Stage) {
@@ -20,6 +21,8 @@ class MainClass : Application() {
 data class TestJson(val name: String, val age: Int)
 
 fun main() {
-    Application.launch(MainClass::class.java)
-//    val createDatabase = CreateDatabase()
+//    Application.launch(MainClass::class.java)
+//    val createDatabase = CreateDatabase("test")
+//    createDatabase.createDatabase("test")
+//    createDatabase.createTable("test", listOf("name", "age"), listOf("string", "int"))
 }

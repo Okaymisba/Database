@@ -10,10 +10,23 @@ class CreateDatabase(val databaseName: String) {
         }
     }
 
-    fun createTable(tableName: String, keys: List<String>) {
-        val tableFile = File(System.getProperty("user.dir") + "/Databases/$databaseName/$tableName")
-        if (!tableFile.exists()) {
-            tableFile.mkdirs()
+    fun createTable(tableName: String, keys: List<String>, dataTypes: List<String>) {
+        val tableDir = File(System.getProperty("user.dir") + "/Databases/$databaseName/$tableName/Columns")
+        if (!tableDir.exists()) {
+            tableDir.mkdirs()
+        }
+
+        for (key in keys) {
+            val keyFile = File(System.getProperty("user.dir") + "/Databases/$databaseName/$tableName/Columns/$key.json")
+            val keyInfoFile =
+                File(System.getProperty("user.dir") + "/Databases/$databaseName/$tableName/Columns/$key-info.json")
+            if (!keyFile.exists()) {
+                keyFile.createNewFile()
+            }
+            if (!keyInfoFile.exists()) {
+                keyInfoFile.createNewFile()
+                keyInfoFile.writeText("{\"type\": \"${dataTypes[keys.indexOf(key)]}\"}")
+            }
         }
     }
 }
