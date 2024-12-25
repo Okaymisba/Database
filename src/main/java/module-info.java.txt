@@ -1,0 +1,11 @@
+module org.example.database {
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires kotlin.stdlib;
+
+    requires org.controlsfx.controls;
+    requires com.dlsc.formsfx;
+
+    opens org.example.database to javafx.fxml;
+    exports org.example.database;
+}
