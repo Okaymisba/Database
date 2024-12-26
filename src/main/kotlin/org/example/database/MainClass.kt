@@ -22,7 +22,7 @@ data class TestJson(val name: String, val age: Int)
 
 fun main() {
 //    Application.launch(MainClass::class.java)
-//    val createDatabase = CreateDatabase("test")
-//    createDatabase.createDatabase("test")
-//    createDatabase.createTable("test", listOf("name", "age"), listOf("string", "int"))
+//    val createDatabase = CreateDatabase()
+//    createDatabase.createDatabase("testDatabase")
+//    createDatabase.createTable("testDatabase", "test", listOf("name", "age"), listOf("string", "int"))
 }
