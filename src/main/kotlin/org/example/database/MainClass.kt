@@ -18,7 +18,7 @@ class MainClass : Application() {
 
 fun main() {
 //    Application.launch(MainClass::class.java)
-    val createDatabase = CreateDatabase()
+//    val createDatabase = CreateDatabase()
 //    createDatabase.createDatabase("testDatabase")
 //    createDatabase.createTable(
 //        tableName = "testTable",
