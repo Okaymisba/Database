@@ -4,7 +4,6 @@ import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
-import kotlinx.serialization.Serializable
 import org.example.database.databaseCreation.CreateDatabase
 
 class MainClass : Application() {
@@ -17,12 +16,15 @@ class MainClass : Application() {
     }
 }
 
-@Serializable
-data class TestJson(val name: String, val age: Int)
-
 fun main() {
 //    Application.launch(MainClass::class.java)
-//    val createDatabase = CreateDatabase()
+    val createDatabase = CreateDatabase()
 //    createDatabase.createDatabase("testDatabase")
-//    createDatabase.createTable("testDatabase", "test", listOf("name", "age"), listOf("string", "int"))
+//    createDatabase.createTable(
+//        tableName = "testTable",
+//        columns = listOf("name", "age"),
+//        dataTypes = listOf("string", "int"),
+//        isUnique = listOf(false, true),
+//        notNull = listOf(true, false)
+//    )
 }
