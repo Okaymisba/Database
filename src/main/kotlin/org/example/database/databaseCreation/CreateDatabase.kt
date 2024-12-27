@@ -15,7 +15,7 @@ class CreateDatabase() {
         }
     }
 
-    fun createTable(tableName: String, keys: List<String>, dataTypes: List<String>) {
+    fun createTable(tableName: String, keys: List<String>, dataTypes: List<String>, isUnique: List<Boolean>) {
         if (keys.size != dataTypes.size) {
             throw Exception("Must initialize Data Type for every Column")
         }
@@ -34,7 +34,10 @@ class CreateDatabase() {
             }
             if (!keyInfoFile.exists()) {
                 keyInfoFile.createNewFile()
-                keyInfoFile.writeText("{\"type\": \"${dataTypes[keys.indexOf(key)]}\"}")
+                keyInfoFile.writeText(
+                    "{\"type\": \"${dataTypes[keys.indexOf(key)]}\", " +
+                        "\"isUnique\": ${isUnique[keys.indexOf(key)]}}"
+                )
             }
         }
     }
