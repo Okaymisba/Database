@@ -43,36 +43,50 @@ object InsertIntoTable {
 
         for (column in columnsOfTable) {
             val columnFile = File(tableDirectory.plus("/Columns/$column.json")).readText()
-            val jsonObjectOfColumn = JSONObject(columnFile)
-            val dataType = jsonObjectOfColumn.getString("type")
-            val isUnique = jsonObjectOfColumn.getBoolean("isUnique")
-            val notNull = jsonObjectOfColumn.getBoolean("notNull")
+            val jsonObjectOfColumn = if (columnFile.isNotEmpty()) JSONObject(columnFile) else JSONObject()
+            val jsonObjectOfColumnInfo = jsonObjectOfTableInfo.getJSONObject(column)
+            val dataType = jsonObjectOfColumnInfo.getString("type")
+            val isUnique = jsonObjectOfColumnInfo.getBoolean("isUnique")
+            val notNull = jsonObjectOfColumnInfo.getBoolean("notNull")
+            val columnValuesInDatabase = jsonObjectOfColumn.getJSONArray(column)
+            val columnIndex = columns.indexOf(column)
 
-            if (dataType == "string") {
-                if (values[columns.indexOf(column)] !is String) {
+            if (columnIndex == -1) {
+                if (notNull) {
+                    throw Exception("Value cannot be null")
+                }
+
+                // TODO: Handling of null values in columns
+
+            } else if (dataType == "string") {
+                if (values[columnIndex] !is String) {
                     throw Exception("Invalid data type")
                 }
 
             } else if (dataType == "int") {
-                if (values[columns.indexOf(column)] !is Int) {
+                if (values[columnIndex] !is Int) {
                     throw Exception("Invalid data type")
                 }
 
             } else if (dataType == "float") {
-                if (values[columns.indexOf(column)] !is Float) {
+                if (values[columnIndex] !is Float) {
                     throw Exception("Invalid data type")
                 }
 
             } else if (dataType == "boolean") {
-                if (values[columns.indexOf(column)] !is Boolean) {
+                if (values[columnIndex] !is Boolean) {
                     throw Exception("Invalid data type")
                 }
 
             } else if (dataType == "double") {
-                if (values[columns.indexOf(column)] !is Double) {
+                if (values[columnIndex] !is Double) {
                     throw Exception("Invalid data type")
                 }
 
+            }
+
+            if (isUnique && values[columnIndex] in columnValuesInDatabase) {
+                throw Exception("Value already exists")
             }
 
         }

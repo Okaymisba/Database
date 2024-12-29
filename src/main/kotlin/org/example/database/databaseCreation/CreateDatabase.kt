@@ -49,6 +49,7 @@ class CreateDatabase() {
 
             if (!columnFile.exists()) {
                 columnFile.createNewFile()
+                columnFile.writeText("{\"$column\": []}")
             }
 
             val data = "{\"type\": \"${dataTypes[columns.indexOf(column)]}\", " +
