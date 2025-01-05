@@ -42,8 +42,10 @@ object InsertIntoTable {
         }
 
         for (column in columnsOfTable) {
-            val columnFile = File(tableDirectory.plus("/Columns/$column.json")).readText()
-            val jsonObjectOfColumn = if (columnFile.isNotEmpty()) JSONObject(columnFile) else JSONObject()
+            val columnFile = File(tableDirectory.plus("/Columns/$column.json"))
+            val contentsOfColumnFile = columnFile.readText()
+            val jsonObjectOfColumn =
+                if (contentsOfColumnFile.isNotEmpty()) JSONObject(contentsOfColumnFile) else JSONObject()
             val jsonObjectOfColumnInfo = jsonObjectOfTableInfo.getJSONObject(column)
             val dataType = jsonObjectOfColumnInfo.getString("type")
             val isUnique = jsonObjectOfColumnInfo.getBoolean("isUnique")
@@ -54,6 +56,11 @@ object InsertIntoTable {
             if (columnIndex == -1) {
                 if (notNull) {
                     throw Exception("Value cannot be null")
+                } else {
+                    columnValuesInDatabase.put(JSONObject.NULL)
+                    jsonObjectOfColumn.put(column, columnValuesInDatabase)
+
+                    columnFile.writeText(jsonObjectOfColumn.toString())
                 }
 
                 // TODO: Handling of null values in columns
@@ -87,6 +94,13 @@ object InsertIntoTable {
 
             if (isUnique && values[columnIndex] in columnValuesInDatabase) {
                 throw Exception("Value already exists")
+            }
+
+            if (columnIndex != -1) {
+                columnValuesInDatabase.put(values[columnIndex])
+                jsonObjectOfColumn.put(column, columnValuesInDatabase)
+
+                columnFile.writeText(jsonObjectOfColumn.toString())
             }
 
         }
