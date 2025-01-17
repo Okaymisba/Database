@@ -75,11 +75,6 @@ object InsertIntoTable {
                     throw Exception("Invalid data type")
                 }
 
-            } else if (dataType == "float") {
-                if (values[columnIndex] !is Float) {
-                    throw Exception("Invalid data type")
-                }
-
             } else if (dataType == "boolean") {
                 if (values[columnIndex] !is Boolean) {
                     throw Exception("Invalid data type")
@@ -96,13 +91,23 @@ object InsertIntoTable {
                 throw Exception("Value already exists")
             }
 
+        }
+
+
+        for (column in columnsOfTable) {
+            val columnFile = File(tableDirectory.plus("/Columns/$column.json"))
+            val contentsOfColumnFile = columnFile.readText()
+            val jsonObjectOfColumn =
+                if (contentsOfColumnFile.isNotEmpty()) JSONObject(contentsOfColumnFile) else JSONObject()
+            val columnValuesInDatabase = jsonObjectOfColumn.getJSONArray(column)
+            val columnIndex = columns.indexOf(column)
+
             if (columnIndex != -1) {
                 columnValuesInDatabase.put(values[columnIndex])
                 jsonObjectOfColumn.put(column, columnValuesInDatabase)
 
                 columnFile.writeText(jsonObjectOfColumn.toString())
             }
-
         }
     }
 }

@@ -6,6 +6,7 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 import org.example.database.databaseCreation.CreateDatabase
 import org.example.database.databaseOperations.InsertIntoTable
+import org.example.database.queryParser.ParseQuery
 
 class MainClass : Application() {
     override fun start(stage: Stage) {
@@ -34,5 +35,6 @@ fun main() {
 //        columns = listOf("name", "age"),
 //        values = listOf("Misbah", 18)
 //    )
-
+//    val query = readlnOrNull()
+//    ParseQuery.parse(query)
 }

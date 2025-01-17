@@ -5,7 +5,9 @@ import java.io.File
 
 var currentDatabase: String? = null
 
-class CreateDatabase() {
+// TODO: Handle current database
+
+object CreateDatabase {
 
     // This will create a Database Directory
     fun createDatabase(databaseName: String) {
