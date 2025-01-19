@@ -5,18 +5,27 @@ import java.io.File
 
 var currentDatabase: String? = null
 
-// TODO: Handle current database
-
 object CreateDatabase {
 
     // This will create a Database Directory
     fun createDatabase(databaseName: String) {
         val databaseDir = File(System.getProperty("user.dir") + "/Databases/$databaseName")
+        val fileForCurrentDatabase = File("${System.getProperty("user.dir")}/crrtdb/crrtdb.txt")
+
         if (!databaseDir.exists()) {
             databaseDir.mkdirs()
             currentDatabase = databaseName
+
+            if (!fileForCurrentDatabase.exists()) {
+                fileForCurrentDatabase.parentFile.mkdirs()
+                fileForCurrentDatabase.createNewFile()
+            }
+
+            fileForCurrentDatabase.writeText(currentDatabase!!)
+
         } else if (databaseDir.exists()) {
             throw Exception("Database already exists")
+
         }
     }
 

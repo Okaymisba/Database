@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
 import org.example.database.databaseCreation.CreateDatabase
+import org.example.database.databaseOperations.Currentdb
 import org.example.database.databaseOperations.InsertIntoTable
 import org.example.database.queryParser.ParseQuery
 
@@ -37,4 +38,6 @@ fun main() {
 //    )
 //    val query = readlnOrNull()
 //    ParseQuery.parse(query)
+//    CreateDatabase.createDatabase("TestDatabase19Jan")
+//    println(Currentdb.get())
 }

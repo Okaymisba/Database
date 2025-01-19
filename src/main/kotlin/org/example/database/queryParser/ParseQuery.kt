@@ -8,6 +8,7 @@ object ParseQuery {
         if (query != null) {
             val insertRegex =
                 Regex("""INSERT\s*INTO\s*(\w+)\s*\((.*?)\)\s*VALUES\s*\((.*?)\);""", RegexOption.IGNORE_CASE)
+
             when {
                 insertRegex.matches(query) -> {
                     val matchResult = insertRegex.matchEntire(query)!!
