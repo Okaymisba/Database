@@ -1,13 +1,17 @@
 package org.example.database.queryParser
 
+import org.example.database.databaseCreation.CreateDatabase
 import org.example.database.databaseOperations.InsertIntoTable
 
 object ParseQuery {
     fun parse(query: String?) {
 
         if (query != null) {
-            val insertRegex =
-                Regex("""INSERT\s*INTO\s*(\w+)\s*\((.*?)\)\s*VALUES\s*\((.*?)\);""", RegexOption.IGNORE_CASE)
+            val insertRegex = Regex(
+                """(?i)^\s*INSERT\s+INTO\s+([a-zA-Z_][a-zA-Z0-9_$]*)\s*\(([^)]+)\)\s*VALUES\s*\(([^)]+)\)\s*;$"""
+            )
+
+            val createDatabaseRegex = Regex("""(?i)^\s*CREATE\s+DATABASE\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*;$""")
 
             when {
                 insertRegex.matches(query) -> {
@@ -40,6 +44,17 @@ object ParseQuery {
                     }
 
                     InsertIntoTable.insert("testDatabase29Dec", tableName, column, values)
+                }
+
+                createDatabaseRegex.matches(query) -> {
+                    val matchResult = createDatabaseRegex.matchEntire(query)!!
+                    val databaseName = matchResult.groupValues[1]
+
+                    CreateDatabase.createDatabase(databaseName)
+                }
+
+                else -> {
+                    throw Exception("Invalid Query: $query")
                 }
             }
         }

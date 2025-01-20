@@ -6,7 +6,7 @@ import org.json.JSONObject
 
 object InsertIntoTable {
     fun insert(
-        databaseName: String? = currentDatabase,
+        databaseName: String? = Currentdb.get(),
         tableName: String,
         columns: List<String>,
         values: List<Any>
